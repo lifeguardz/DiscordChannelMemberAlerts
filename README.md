@@ -1,1 +1,1 @@
-# DiscordChannelMemberAlert
+# Discord Channel Member Alerts
