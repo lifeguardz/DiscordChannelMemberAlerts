@@ -1,6 +1,7 @@
 package ch.lifeguardz.app.discordmembercounter.configs;
 
-import ch.lifeguardz.app.discordmembercounter.listeners.DiscordGuildMemberListener;
+import ch.lifeguardz.app.discordmembercounter.listeners.DiscordListener;
+import ch.lifeguardz.app.discordmembercounter.services.FileService;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -15,7 +16,9 @@ public class BeanConfig
     private final DiscordConfig discordConfig;
 
     @Autowired
-    public BeanConfig(final DiscordConfig discordConfig)
+    public BeanConfig(
+        final DiscordConfig discordConfig
+    )
     {
         this.discordConfig = discordConfig;
     }
@@ -24,12 +27,24 @@ public class BeanConfig
     public JDA jda() throws LoginException, InterruptedException
     {
         JDA jda = JDABuilder.createDefault(discordConfig.getBotToken())
-            .addEventListeners(new DiscordGuildMemberListener())
+            .addEventListeners(discordGuildMemberListener())
             .enableIntents(GatewayIntent.GUILD_MEMBERS)
             .build();
 
         jda.awaitReady();
 
         return jda;
+    }
+
+    @Bean
+    public DiscordListener discordGuildMemberListener()
+    {
+        return new DiscordListener(fileService());
+    }
+
+    @Bean
+    public FileService fileService()
+    {
+        return new FileService();
     }
 }

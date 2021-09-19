@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.events.guild.GenericGuildEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,13 +22,13 @@ public class DiscordListener extends ListenerAdapter
     }
 
     @Override
-    public void onGuildMemberRemove(GuildMemberRemoveEvent event)
+    public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event)
     {
         updateTotalChannelMembersFile(event);
     }
 
     @Override
-    public void onGuildMemberJoin(GuildMemberJoinEvent event)
+    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event)
     {
         updateTotalChannelMembersFile(event);
         updateLastJoinedChannelMemberFile(event);
