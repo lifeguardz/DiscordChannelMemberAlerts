@@ -6,11 +6,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FileService
 {
+    private static Logger logger = LoggerFactory.getLogger(FileService.class);
+
     public void createFiles()
     {
         Arrays.stream(TextFile.values()).forEach(textFile -> writeFile(textFile, ""));
@@ -27,7 +31,7 @@ public class FileService
             );
         }
         catch (IOException e) {
-            // TODO log
+            logger.warn("Could not update File. FileName: " + textFile.getFileName() + " Text: " + text, e);
         }
     }
 }
