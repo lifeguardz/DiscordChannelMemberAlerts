@@ -17,7 +17,6 @@
   </developers>
 
   <properties>
-    <project.scm.id>github</project.scm.id>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
@@ -30,14 +29,6 @@
 
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
   </properties>
-
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub</name>
-      <url>https://maven.pkg.github.com/lifeguardz/DiscordChannelMemberAlerts</url>
-    </repository>
-  </distributionManagement>
 
   <repositories>
     <repository>
@@ -107,23 +98,24 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+            <configuration>
+              <mainClass>
+                ch.lifeguardz.app.discordmembercounter.Application
+              </mainClass>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
-
-  <scm>
-    <developerConnection>scm:git:https://github.com/lifeguardz/DiscordChannelMemberAlerts.git</developerConnection>
-  </scm>
 </project>
